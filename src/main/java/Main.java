@@ -1,7 +1,9 @@
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
-import org.json.simple.*;
-import org.json.simple.parser.*;
+import org.json.JSONTokener;
+import org.json.JSONObject;
 
 public class Main {
     public static void main(String[] args) {    
@@ -48,17 +50,18 @@ public class Main {
         Main.get_question(username);
     }
     public static void get_question(String username) {
-        String filePath = new File("").getAbsolutePath();
-        System.out.println(filePath);
-        JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("C:/Users/2844108/OneDrive - EDEKA/Dokumente/Java Projects/Java Quiz/src/main/resources/quiz.json"));
-            JSONObject jsonObject = (JSONObject)obj;
-            String name = (String)jsonObject.get("name");
-            System.out.printf("My name is %s", name);
-            // String value = (String) ((JSONObject) ((JSONObject) ((JSONArray) new JSONParser().parse("[{ \"question1\": { \"question\": \"How is a method used in an instance?\"}]")).get(0)).get("question1")).get("question");
-            // System.out.println(value);
-        } catch(Exception e) {
+            File quizdata = new File ("quiz.json");
+            FileReader reader = new FileReader(quizdata);
+            JSONTokener tokener = new JSONTokener(reader);
+            JSONObject jsonObject = new JSONObject(tokener);
+            reader.close();
+            System.out.println(jsonObject.toString(4));
+            JSONObject question1Object = jsonObject.getJSONObject("question1");
+            String questionValue = question1Object.getString("question");
+
+            System.out.println("1st Question: " + questionValue);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
