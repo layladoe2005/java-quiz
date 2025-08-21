@@ -61,12 +61,11 @@ public class Main {
             reader.close();
             // System.out.println(jsonObject.toString(4));
             JSONArray questionsObject = jsonObject.getJSONArray("questions");
-            questionsObject.forEach((question) -> {
-                JSONObject currentQuestion = (JSONObject) question;
+            for (int i = 0; i < questionsObject.length(); i++) {
+                JSONObject currentQuestion = questionsObject.getJSONObject(i);
                 String title = currentQuestion.getString("title");
-                System.out.printf("%dst Question: ", title);
-
-            }); 
+                System.out.printf("Question: %s", title);
+            }
 
             // System.out.printf("%dst Question: " + questionValue, current_run);
             // current_run += 1;
