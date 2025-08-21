@@ -20,8 +20,7 @@ public class Main {
         String userName;
 
     if (input_username_check.hasNextLine()) {
-        userName = input_usernam
-        e_check.nextLine();  // Read user input
+        userName = input_username_check.nextLine();  // Read user input
         if ("No".equals(userName)) {
             System.out.println("Uncooperative. Not appreciated.");
             userName = "Common Joe";
