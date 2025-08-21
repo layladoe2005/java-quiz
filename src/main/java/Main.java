@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import org.json.JSONTokener;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Main {
@@ -33,9 +34,9 @@ public class Main {
             userName = "Common Joe";
         }
             input_username_check.close();
-            Main.startQuiz(userName);
+            Main.startQuiz(userName, 0);
     }
-    public static void startQuiz(String username) {
+    public static void startQuiz(String username, int run) {
         try {
             Thread.sleep(1000); System.out.println("Quiz starting... "); 
             Thread.sleep(600); System.out.print("N ");
@@ -47,20 +48,29 @@ public class Main {
         e.printStackTrace();
         System.out.print("Now");
         }
-        Main.get_question(username);
+        System.out.println(run);
+        Main.get_question(username, run);
     }
-    public static void get_question(String username) {
+    public static void get_question(String username, int run) {
+        int current_run = run;
         try {
             File quizdata = new File ("quiz.json");
             FileReader reader = new FileReader(quizdata);
             JSONTokener tokener = new JSONTokener(reader);
             JSONObject jsonObject = new JSONObject(tokener);
             reader.close();
-            System.out.println(jsonObject.toString(4));
-            JSONObject question1Object = jsonObject.getJSONObject("question1");
-            String questionValue = question1Object.getString("question");
+            // System.out.println(jsonObject.toString(4));
+            JSONArray questionsObject = jsonObject.getJSONArray("questions");
+            questionsObject.forEach((question) -> {
+                JSONObject currentQuestion = (JSONObject) question;
+                String title = currentQuestion.getString("title");
+                System.out.printf("%dst Question: ", title);
 
-            System.out.println("1st Question: " + questionValue);
+            }); 
+
+            // System.out.printf("%dst Question: " + questionValue, current_run);
+            // current_run += 1;
+            startQuiz(username, current_run);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -19,5 +19,17 @@
         },
         "correctanswer": "b",
         "points": 10
-    }
+    },
+    "questions": [
+        {
+            "title": "Who am I?",
+            "correct_answer": "Correct!",
+            "other_answers": [
+                "Incorrect",
+                "Incorrect 2"
+            ],
+            "points": 200
+        }
+
+    ]
 }
